@@ -151,11 +151,11 @@ class IOSessionImpl implements IOSession {
 
     @Override
     public void setEvent(final int op) {
-        if (isStatusClosed()) {
-            return;
-        }
         lock.lock();
         try {
+            if (isStatusClosed()) {
+                return;
+            }
             this.key.interestOps(this.key.interestOps() | op);
         } finally {
             lock.unlock();
@@ -165,11 +165,11 @@ class IOSessionImpl implements IOSession {
 
     @Override
     public void clearEvent(final int op) {
-        if (isStatusClosed()) {
-            return;
-        }
         lock.lock();
         try {
+            if (isStatusClosed()) {
+                return;
+            }
             this.key.interestOps(this.key.interestOps() & ~op);
         } finally {
             lock.unlock();
